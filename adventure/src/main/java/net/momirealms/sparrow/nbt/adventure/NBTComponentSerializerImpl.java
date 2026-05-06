@@ -615,6 +615,7 @@ final class NBTComponentSerializerImpl implements NBTComponentSerializer {
                     }
                 }
                 contents = showItemTag;
+                hoverTag.putString(HOVER_EVENT_ACTION, HOVER_EVENT_SHOW_ITEM);
             } else if (action == HoverEvent.Action.SHOW_ENTITY) {
                 HoverEvent.ShowEntity entity = (HoverEvent.ShowEntity) event.value();
                 CompoundTag showEntityTag = new CompoundTag();
@@ -625,6 +626,7 @@ final class NBTComponentSerializerImpl implements NBTComponentSerializer {
                     showEntityTag.put(HOVER_EVENT_NAME, serialize(customName));
                 }
                 contents = showEntityTag;
+                hoverTag.putString(HOVER_EVENT_ACTION, HOVER_EVENT_SHOW_ENTITY);
             } else {
                 return;
             }
