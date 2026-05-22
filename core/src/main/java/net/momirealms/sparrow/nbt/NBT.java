@@ -5,6 +5,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -179,6 +181,45 @@ public class NBT {
     public static void writeFile(File file, CompoundTag nbt) throws IOException {
         try (FileOutputStream fileOutputStream = new FileOutputStream(file);
              DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream)) {
+            writeCompound(nbt, dataOutputStream, false);
+        }
+    }
+
+    /**
+     * Reads a CompoundTag from a file path.
+     *
+     * @param path the path to read from
+     * @return the read CompoundTag, or null if the file does not exist or is empty
+     * @throws IOException if an I/O error occurs
+     */
+    @Nullable
+    public static CompoundTag readFile(Path path) throws IOException {
+        if (Files.notExists(path) || !Files.isRegularFile(path)) {
+            return null;
+        }
+        if (Files.size(path) == 0) {
+            return null;
+        }
+        try (InputStream is = Files.newInputStream(path);
+             DataInputStream input = new DataInputStream(is)) {
+            return readCompound(input, false);
+        }
+    }
+
+    /**
+     * Writes a CompoundTag to a file path.
+     *
+     * @param path the file path to write to
+     * @param nbt  the CompoundTag to write
+     * @throws IOException if an I/O error occurs
+     */
+    public static void writeFile(Path path, CompoundTag nbt) throws IOException {
+        Path parent = path.getParent();
+        if (parent != null && Files.notExists(parent)) {
+            Files.createDirectories(parent);
+        }
+        try (OutputStream os = Files.newOutputStream(path);
+             DataOutputStream dataOutputStream = new DataOutputStream(os)) {
             writeCompound(nbt, dataOutputStream, false);
         }
     }
