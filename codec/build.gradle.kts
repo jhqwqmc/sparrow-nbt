@@ -11,6 +11,7 @@ repositories {
 dependencies {
     compileOnly("org.jetbrains:annotations:24.0.0")
     compileOnly("com.mojang:datafixerupper:8.0.16")
+    compileOnly("com.google.code.gson:gson:2.14.0")
     compileOnly(project(":core"))
 }
 
