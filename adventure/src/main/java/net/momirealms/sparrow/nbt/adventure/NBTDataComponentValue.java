@@ -29,17 +29,11 @@ public interface NBTDataComponentValue extends DataComponentValue {
         return RemovedNBTDataComponentValue.INSTANCE;
     }
 
-    class RemovedNBTDataComponentValue implements NBTDataComponentValue {
+    class RemovedNBTDataComponentValue extends NBTDataComponentValueImpl {
         public static final @NotNull RemovedNBTDataComponentValue INSTANCE = new RemovedNBTDataComponentValue();
-        private final CompoundTag tag;
 
         private RemovedNBTDataComponentValue() {
-            this.tag = new CompoundTag(Map.of());
-        }
-
-        @Override
-        public @NotNull Tag tag() {
-            return this.tag;
+            super(new CompoundTag(Map.of()));
         }
 
         @Override
