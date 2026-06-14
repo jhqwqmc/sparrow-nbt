@@ -95,6 +95,11 @@ public class NBTOps implements DynamicOps<Tag> {
     }
 
     @Override
+    public DataResult<Boolean> getBooleanValue(Tag input) {
+        return this.getNumberValue(input).map(value -> value.doubleValue() != 0.0);
+    }
+
+    @Override
     public Tag createBoolean(boolean b) {
         return new ByteTag(b);
     }
